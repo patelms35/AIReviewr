@@ -21,8 +21,34 @@ body,
   padding: 0 2rem;
 }
 
+.left-side{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.left-side img {
+  height: 3.5rem;
+}
+
+.media-icon {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.media-icon a {
+  color: #6a59d1;
+  font-size: 1.5em;
+  margin: 10px 0;
+}
+
+.media-icon a:hover {
+  color: #614fd0;
+}
+
 main {
-  height: 92%;
+  height: 90%;
   width: 100%;
   padding: 1.5rem;
   display: flex;
@@ -70,4 +96,71 @@ main .right {
   padding: 2rem 3rem;
   font-size: 1.5rem;
   overflow: auto;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, #4caf50, #8bc34a);
+  animation: loadingAnimation 2s infinite;
+}
+
+@keyframes loadingAnimation {
+  0% {
+    width: 0%;
+  }
+  50% {
+    width: 50%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.foot{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+}
+
+@media screen and (max-width: 1070px) {
+  main {
+    flex-direction: column;
+  }
+
+  main .left,
+  main .right {
+    flex-basis: 100%;
+  }
+}
+
+
+@media screen and (max-width: 412px) {
+  .navbar {
+    padding: 0 1rem;
+  }
+
+  .left-side h2{
+    font-size: 1.2em;
+  }
+
+  .left-side img {
+    height: 3rem;
+  }
+
+  .media-icon a {
+    font-size: 1.2em;
+  }
+
+  .foot{
+    font-size: 0.8em;
+  }
+}
+
+@media screen and (max-width: 335px) {
+
+  .left-side h2{
+    font-size: 0.8em;
+  }
 }

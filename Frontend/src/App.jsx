@@ -12,31 +12,54 @@ function App() {
   const [code, setCode] = useState(` function sum() {
   return 1 + 1
 }`);
-
-  const [review, setReview] = useState(``);
+  const [review, setReview] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     prism.highlightAll();
   }, []);
 
   async function reviewCode() {
-    const response = await axios.post("http://localhost:3000/ai/get-review", {
-      code,
-    });
-    setReview(response.data);
+    setLoading(true); // Start loading
+    try {
+      const response = await axios.post("http://localhost:3000/ai/get-review", {
+        code,
+      });
+      setReview(response.data);
+    } catch (error) {
+      console.error("Error reviewing code:", error);
+      setReview("Failed to fetch review.");
+    }
+    setLoading(false); // Stop loading
   }
 
   return (
     <>
-      {/* header  */}
+      {/* Header */}
+      <nav>
+        <div className="navbar">
+          <div className="left-side">
+            <img src="./logo.png" alt="" />
+            <h2>AI Code Reviewr</h2>
+          </div>
 
-<nav>
-  <div className="navbar">
-    <h2>Patel Mark</h2>
-  </div>
-</nav>
+          <div className="right-side">
+            <div className="media-icon">
+              <a href="https://instagram.com/patel_mark_7262?igshid=YmMyMTA2M2Y=">
+                <i className="fab fa-instagram" />
+              </a>
+              <a href="https://github.com/patelms35">
+                <i className="fab fa-github" />
+              </a>
+              <a href="https://www.linkedin.com/in/patelmark6172">
+                <i className="fab fa-linkedin" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
 
-      {/* main */}
+      {/* Main Content */}
       <main>
         <div className="left">
           <div className="code">
@@ -58,13 +81,20 @@ function App() {
             />
           </div>
           <div onClick={reviewCode} className="review">
-            Review
+            {loading ? "Processing..." : "Review Code"}
           </div>
         </div>
+
         <div className="right">
+          {loading && <div className="progress-bar"></div>}
           <Markdown rehypePlugins={[rehypeHighlight]}>{review}</Markdown>
         </div>
       </main>
+      <footer>
+        <div className="foot">
+          <p>Made With ❤️ By Mark Patel Copyright © 2025 .</p>
+        </div>
+      </footer>
     </>
   );
 }
