@@ -57,13 +57,13 @@ const model = genAI.getGenerativeModel({
                 async function fetchData() {
                     try {
                         const response = await fetch('/api/data');
-                        if (!response.ok) throw new Error("HTTP error! Status: $\{response.status}");
+                        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
                         return await response.json();
                     } catch (error) {
                         console.error("Failed to fetch data:", error);
                         return null;
                     }
-                }
+
                    \`\`\`
 
                 💡 Improvements:
