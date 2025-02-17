@@ -1,15 +1,25 @@
 const express = require('express');
-const aiRoutes = require('./routes/ai.routes')
-const cors = require('cors')
+const cors = require('cors');
+const aiRoutes = require('./routes/ai.routes');
 
-const app = express()
+const app = express();
 
-app.use(cors())
+// Enable CORS for frontend (Vercel)
+app.use(cors({
+  origin: "*", // Change this to your frontend URL for better security
+  methods: "GET,POST",
+  allowedHeaders: "Content-Type",
+}));
 
+// Middleware to parse JSON request body
+app.use(express.json());
 
-app.use(express.json())
+// Define API routes
+app.use('/ai', aiRoutes);
 
+// Health Check Route (Optional)
+app.get("/", (req, res) => {
+  res.send("AI Code Reviewer Backend is Running!");
+});
 
-app.use('/ai', aiRoutes)
-
-module.exports = app
+module.exports = app;
