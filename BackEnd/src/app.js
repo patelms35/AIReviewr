@@ -1,27 +1,18 @@
 const express = require('express');
-const cors = require('cors');
-const aiRoutes = require('./routes/ai.routes');
+const aiRoutes = require('./routes/ai.routes')
+const cors = require('cors')
 
-const app = express();
+const app = express()
 
-// Enable CORS for frontend (Vercel)
-app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? ['https://ai-reviewr.vercel.app'] // Your frontend URL
-    : 'http://localhost:5173', // Vite's default development port
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type'],
-}));
+app.use(cors())
 
-// Middleware to parse JSON request body
-app.use(express.json());
 
-// Define API routes
-app.use('/ai', aiRoutes);
+app.use(express.json())
 
-// Health Check Route (Optional)
-app.get("/", (req, res) => {
-  res.send("AI Code Reviewer Backend is Running!");
-});
+app.get('/', (req, res) => {
+    res.send('Hello World')
+})
 
-module.exports = app;
+app.use('/ai', aiRoutes)
+
+module.exports = app
