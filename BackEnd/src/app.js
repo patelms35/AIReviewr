@@ -6,9 +6,11 @@ const app = express();
 
 // Enable CORS for frontend (Vercel)
 app.use(cors({
-  origin: "*", // Change this to your frontend URL for better security
-  methods: "GET,POST",
-  allowedHeaders: "Content-Type",
+  origin: process.env.NODE_ENV === 'production' 
+    ? ['https://ai-reviewr.vercel.app'] // Your frontend URL
+    : 'http://localhost:5173', // Vite's default development port
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type'],
 }));
 
 // Middleware to parse JSON request body
