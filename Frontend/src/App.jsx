@@ -8,6 +8,9 @@ import "highlight.js/styles/github-dark.css";
 import axios from "axios";
 import "./App.css";
 
+// Get the backend URL from environment variable or fallback to localhost for development
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
+
 function App() {
   const [code, setCode] = useState(` function sum() {
   return 1 + 1
@@ -22,13 +25,13 @@ function App() {
   async function reviewCode() {
     setLoading(true); // Start loading
     try {
-      const response = await axios.post("http://localhost:3000/ai/get-review", {
+      const response = await axios.post(`${BACKEND_URL}/ai/get-review`, {
         code,
       });
       setReview(response.data);
     } catch (error) {
       console.error("Error reviewing code:", error);
-      setReview("Failed to fetch review.");
+      setReview("Failed to fetch review. Please make sure the backend service is running and accessible.");
     }
     setLoading(false); // Stop loading
   }
